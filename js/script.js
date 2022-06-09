@@ -56,9 +56,15 @@ const seeDogList = () => {
   seeDogBtn.addEventListener("click", (event) => {
     event.preventDefault();
     console.log(form.value);
-    breed = form.value;
+    breed = form.value.split("-");
     gridImages.forEach(item =>{
-      let url = `https://dog.ceo/api/breed/${breed}/images/random`;
+      let url;
+      if(breed.length ===1){
+        url = `https://dog.ceo/api/breed/${breed[0]}/images/random`;
+      }else if(breed.length===2){
+        url = `https://dog.ceo/api/breed/${breed[0]}/${breed[1]}/images/random`;
+      }
+
       fetch(url).then(response=>response.json()).then(data=>{
         item.firstElementChild.src= data.message;
         item.lastElementChild.lastElementChild.firstElementChild.textContent = breed;
